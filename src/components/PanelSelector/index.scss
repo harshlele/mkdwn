@@ -1,0 +1,23 @@
+.row{
+    width: 100%;
+    height: 50px;
+    margin: 0;
+    display: flex;
+}
+
+.col{
+    width: 50%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.selected {
+    background-color: #eeeeee;
+}
+
+@media only screen and (min-width: 992px){
+    .row{
+        display: none;
+    }
+}
