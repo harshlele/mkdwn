@@ -1,0 +1,27 @@
+.editor{
+    width: 100%;
+    display: flex;
+}
+
+.edit{
+    width: 100%;
+    height: 200px;
+    background-color: red;
+    text-align: left;
+}
+
+.doc{
+    width: 100%;
+    height: 200px;
+    background-color: blue;
+}
+
+@media only screen and (min-width: 992px){
+    .edit{
+        width: 50%;
+    }
+
+    .doc{
+        width: 50%;
+    }
+}

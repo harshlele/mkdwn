@@ -1,26 +1,30 @@
-import React, {useState} from 'react'
+import React from 'react'
 import EditIcon from './assets/create-36dp.svg'
 import ArticleIcon from './assets/article-36dp.svg'
 import './index.scss'
+import {Tab} from '../../App'
 
-export default function PanelSelector() {
+interface Props{
+    currentTab: Tab
+    tabChangeCallback: Function
+}
 
-    const [currentTab, setCurrTab] = useState(0);
+export default function PanelSelector(props: Props) {
 
-    const onEditClick = function (event: Object) {
-        setCurrTab(0);
+    const onEditClick = function () {
+        props.tabChangeCallback(Tab.EDITOR);
     }
 
-    const onArtClick = function (event: Object) {
-        setCurrTab(1);
+    const onArtClick = function () {
+        props.tabChangeCallback(Tab.DOCUMENT);
     }
 
     return (
         <div className="row">
-            <div className={`col btn-edit ${currentTab === 0 ? 'selected' : '' }`} onClick={onEditClick}>
+            <div className={`col btn-edit ${!props.currentTab ? 'selected' : '' }`} onClick={onEditClick}>
                 <img src={EditIcon} alt="Edit"/>
             </div>
-            <div className={`col btn-edit ${currentTab === 1 ? 'selected' : '' }`} onClick={onArtClick}>
+            <div className={`col btn-edit ${props.currentTab ? 'selected' : '' }`} onClick={onArtClick}>
                 <img src={ArticleIcon} alt="Article"/>
             </div>
         </div>
