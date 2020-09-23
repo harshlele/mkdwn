@@ -8,9 +8,18 @@ export enum Tab {EDITOR , DOCUMENT, BOTH};
 
 function App() {
 
-  const [currTab, setCurrTab] = useState(Tab.EDITOR);
+  let tab;
+  if(window.innerWidth >= 992){
+    tab = Tab.BOTH;
+  }
+  else{
+    tab = Tab.EDITOR;
+  }
+
+  const [currTab, setCurrTab] = useState(tab);
 
   useEffect(() => {
+    
     function resize(){
       if(window.innerWidth >= 992){
         setCurrTab(Tab.BOTH);
@@ -19,7 +28,7 @@ function App() {
         setCurrTab(Tab.EDITOR);
       }
     }
-    
+
     window.addEventListener("resize",resize);
 
     return () => {
