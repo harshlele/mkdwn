@@ -3,18 +3,21 @@ import './index.scss'
 import CloudIcon from './assets/cloud-36dp.svg'
 import DownloadIcon from './assets/dw-36dp.svg'
 
-export default function TopBar() {
+interface Props{
+  download: Function,
+  saveGDrive: Function
+}
+
+export default function TopBar(props: Props) {
 
   const title:string = "Markdown Editor";
 
   const onCloudClick = function (event: Object) {
-    const e = {...event};
-    console.log(e);
+    props.saveGDrive();
   }
 
   const onDwClick = function (event: Object) {
-    const e = {...event};
-    console.log(e);
+    props.download();
   }
 
   return (

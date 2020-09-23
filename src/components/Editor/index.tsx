@@ -5,11 +5,12 @@ import showdown from 'showdown'
 
 interface Props{
     currentTab: Tab
+    rawText: string,
+    rawTextCallback: Function
 }
 
 export default function Editor(props:Props){
 
-    const [rawText, setRawText] = useState("");
     const [htmlText, setHtmlText] = useState("");
 
     const converter = new showdown.Converter();
@@ -24,13 +25,13 @@ export default function Editor(props:Props){
     }
 
     const onTextChange = function(e:any){
-        setRawText(e.target.value);
-        setHtmlText(converter.makeHtml(rawText));
+        props.rawTextCallback(e.target.value);
+        setHtmlText(converter.makeHtml(props.rawText));
     }
 
     return (
         <div className="editor">
-            {isEditor() && <textarea className="edit" onChange={onTextChange} value={rawText}></textarea>}
+            {isEditor() && <textarea className="edit" onChange={onTextChange} value={props.rawText}></textarea>}
             {isDoc() && <div className="doc" dangerouslySetInnerHTML={{__html: htmlText}}></div>}
         </div>
     );
