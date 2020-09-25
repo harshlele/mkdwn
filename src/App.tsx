@@ -41,11 +41,18 @@ function App() {
   useEffect(() => {
     
     function resize(){
-      if(window.innerWidth >= 992){
-        setCurrTab(Tab.BOTH);
-      }
-      else{
-        setCurrTab(Tab.EDITOR);
+      let timer: NodeJS.Timeout;
+      return function(){
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          if(window.innerWidth >= 992){
+            setCurrTab(Tab.BOTH);
+          }
+          else{
+            setCurrTab(Tab.EDITOR);
+          }
+        }, 200);
+        
       }
     }
 
