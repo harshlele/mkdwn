@@ -4,19 +4,19 @@ import CloudIcon from './assets/cloud-36dp.svg'
 import DownloadIcon from './assets/dw-36dp.svg'
 
 interface Props{
-  download: Function,
-  saveGDrive: Function
+  download() : void,
+  saveGDrive(): void
 }
 
 export default function TopBar(props: Props) {
 
   const title:string = "Markdown Editor";
 
-  const onCloudClick = function (event: Object) {
+  const onCloudClick = function (event: React.SyntheticEvent) {
     props.saveGDrive();
   }
 
-  const onDwClick = function (event: Object) {
+  const onDwClick = function (event: React.SyntheticEvent) {
     props.download();
   }
 

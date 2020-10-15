@@ -6,7 +6,7 @@ import showdown from 'showdown'
 interface Props{
     currentTab: Tab
     rawText: string,
-    rawTextCallback: Function
+    rawTextCallback(s: string) : void
 }
 
 export default function Editor(props:Props){
@@ -24,8 +24,9 @@ export default function Editor(props:Props){
         return (props.currentTab === Tab.DOCUMENT || props.currentTab === Tab.BOTH);
     }
 
-    const onTextChange = function(e:any){
-        props.rawTextCallback(e.target.value);
+    const onTextChange = function(e: React.SyntheticEvent){
+        const target = (e.target as HTMLInputElement);
+        props.rawTextCallback(target.value);
         setHtmlText(converter.makeHtml(props.rawText));
     }
 

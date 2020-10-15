@@ -8,7 +8,7 @@ export enum Tab {EDITOR , DOCUMENT, BOTH};
 
 function App() {
 
-  let tab;
+  let tab: Tab;
   if(window.innerWidth >= 992){
     tab = Tab.BOTH;
   }
@@ -35,7 +35,7 @@ function App() {
   };
 
   const saveToDrive = () => {
-    console.log("cloud click");
+    console.log("cloud click"); // TODO: complete this
   };
 
   useEffect(() => {

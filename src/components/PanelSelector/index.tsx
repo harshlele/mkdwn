@@ -5,8 +5,8 @@ import './index.scss'
 import {Tab} from '../../App'
 
 interface Props{
-    currentTab: Tab
-    tabChangeCallback: Function
+    currentTab: Tab,
+    tabChangeCallback(t: any) : void // TODO: fix this type
 }
 
 export default function PanelSelector(props: Props) {
