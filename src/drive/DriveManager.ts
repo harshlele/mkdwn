@@ -23,5 +23,13 @@ export class DriveManager{
         });
     }
 
+    isSignedIn(){
+        return this.gapi.auth2.getAuthInstance().isSignedIn.get();
+    }
+
+    signIn(){
+        this.gapi.auth2.getAuthInstance().signIn();
+    }
+
 }
 

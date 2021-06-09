@@ -39,6 +39,11 @@ function App() {
 
   const saveToDrive = () => {
     console.log("cloud click"); // TODO: complete this
+    if(!driveMg.isSignedIn()){
+      console.log("signing in!");
+      driveMg.signIn();
+    }
+
   };
 
   useEffect(() => {
