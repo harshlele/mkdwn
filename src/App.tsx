@@ -3,6 +3,8 @@ import TopBar from './components/TopBar'
 import PanelSelector from './components/PanelSelector'
 import Editor from './components/Editor'
 import './App.css';
+import { loadGoogleScript } from './drive/GoogleScriptLoad';
+import { DriveManager } from './drive/DriveManager';
 
 export enum Tab {EDITOR , DOCUMENT, BOTH}; 
 
@@ -18,6 +20,7 @@ function App() {
 
   const [currTab, setCurrTab] = useState(tab);
   const [rawText, setRawText] = useState("");
+  const [driveMg, setDriveMg] = useState<DriveManager>(new DriveManager());
 
   const downloadFile = () => {
     let d = new Date();
@@ -58,10 +61,19 @@ function App() {
 
     window.addEventListener("resize",resize);
 
+    if(!(window as any).OnGoogleScriptLoad){
+      (window as any).OnGoogleScriptLoad = function(){
+        console.log("SCRIPT LOADED");
+        driveMg?.init();
+      }  
+    }
+
+    loadGoogleScript();
+
     return () => {
       window.removeEventListener("resize",resize);
     }
-  });
+  },[]);
 
   return (
     <div className="App">
