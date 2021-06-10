@@ -8,10 +8,26 @@ body {
   height: 100%;
 }
 
+body{
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 html, #root, .App{
   height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+
+body{
+  --bg-color: #fdf6e3;
+  --text-color: #586e75;
+}
+
+body.dark{
+  --bg-color: #002b36;
+  --text-color: #93a1a1;
 }

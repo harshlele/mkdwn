@@ -19,12 +19,12 @@ function App() {
   }
 
   const [currTab, setCurrTab] = useState(tab);
-  const [rawText, setRawText] = useState("");
+  const [rawText, setRawText] = useState("<!--Type something here. Markdown will be rendered to the right.-->");
   const [driveMg, setDriveMg] = useState<DriveManager>(new DriveManager());
 
   const downloadFile = () => {
     let d = new Date();
-    let fileName = `Markdown ${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.md`;
+    let fileName = `Markdown_${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.md`;
     
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(rawText));    

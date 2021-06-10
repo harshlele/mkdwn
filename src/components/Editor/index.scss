@@ -12,6 +12,9 @@
     resize: none;
     border: none;
 
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
     &:focus, &:active{
         outline: none;
     }
@@ -44,7 +47,6 @@
 
     .doc{
         width: 50%;
-        border-left: 2px solid lightgray;
     }
 }
 

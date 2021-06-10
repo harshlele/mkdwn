@@ -15,9 +15,9 @@ export class DriveManager{
                 discoveryDocs: this.discoveryDocs,
                 scope: this.scopes
             }).then(() => {
-                console.log("client init uwu!");
+                console.log("client init!");
             }, (error:any) => {
-                console.log(error);
+                console.log("client init: ",error);
             });
 
         });
@@ -56,7 +56,8 @@ export class DriveManager{
           });
         
     }
-
+    
+    //runs callback when sign in status changes
     onSignInChange(callback: Function){
         this.gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
     }

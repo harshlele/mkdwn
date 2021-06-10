@@ -1,7 +1,10 @@
 import React from 'react'
 import './index.scss'
 import CloudIcon from './assets/cloud-36dp.svg'
+import CloudIconWhite from './assets/cloud-36dp-white.svg'
 import DownloadIcon from './assets/dw-36dp.svg'
+import DownloadIconWhite from './assets/dw-36dp-white.svg'
+
 
 interface Props{
   download() : void,
