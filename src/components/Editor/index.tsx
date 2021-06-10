@@ -6,7 +6,8 @@ import showdown from 'showdown'
 interface Props{
     currentTab: Tab
     rawText: string,
-    rawTextCallback(s: string) : void
+    rawTextCallback(s: string) : void,
+    editorKeyDownCallback(e: any): void
 }
 
 export default function Editor(props:Props){
@@ -32,7 +33,7 @@ export default function Editor(props:Props){
 
     return (
         <div className="editor">
-            {isEditor() && <textarea className="edit" onChange={onTextChange} value={props.rawText}></textarea>}
+            {isEditor() && <textarea className="edit" onChange={onTextChange} value={props.rawText} onKeyDown={props.editorKeyDownCallback}></textarea>}
             {isDoc() && <div className="doc" dangerouslySetInnerHTML={{__html: htmlText}}></div>}
         </div>
     );

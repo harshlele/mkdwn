@@ -11,9 +11,10 @@
     text-align: left;
     resize: none;
     border: none;
-
+    font-size: 1.2em;
+    
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--content-1);
 
     &:focus, &:active{
         outline: none;

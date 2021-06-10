@@ -20,7 +20,7 @@ function App() {
 
   const [currTab, setCurrTab] = useState(tab);
   const [rawText, setRawText] = useState("<!--Type something here. Markdown will be rendered to the right.-->");
-  const [driveMg, setDriveMg] = useState<DriveManager>(new DriveManager());
+  const [driveMg] = useState<DriveManager>(new DriveManager());
 
   const downloadFile = () => {
     let d = new Date();
@@ -51,6 +51,23 @@ function App() {
       driveMg.listFiles();
     }
 
+  };
+
+  const onEditorKeyDown = (e: any) => {
+    
+    if (e.key == 'Tab') {
+      e.preventDefault();
+      let target = e.target;
+      var start = target.selectionStart;
+      var end = target.selectionEnd;
+  
+      // set textarea value to: text before caret + tab + text after caret
+      let newText = rawText.substring(0, start) + "\t" + rawText.substring(end);
+      setRawText(newText);
+  
+      // put caret at right position again
+      target.selectionStart =  target.selectionEnd = start + 1;
+    }
   };
 
   useEffect(() => {
@@ -91,7 +108,7 @@ function App() {
     <div className="App">
       <TopBar download={downloadFile} saveGDrive={saveToDrive}/>
       <PanelSelector tabChangeCallback={setCurrTab} currentTab={currTab}/>
-      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText}/>
+      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} editorKeyDownCallback={onEditorKeyDown}/>
     </div>
   );
 }

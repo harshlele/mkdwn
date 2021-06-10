@@ -10,7 +10,7 @@ body {
 
 body{
   background-color: var(--bg-color);
-  color: var(--text-color);
+  color: var(--content-1);
 }
 
 html, #root, .App{
@@ -22,12 +22,25 @@ code {
 }
 
 
-body{
+:root{
   --bg-color: #fdf6e3;
-  --text-color: #586e75;
+  --bg-color-alt:  #eee8d5;
+  --content-1: #586e75;
+  --content-2: #586e75;
+  --content-3: #657b83;
+  --content-4: #839496;
+  --yellow: #b58900;
+  --orange: #cb4b16;
+  --red: #dc322f;
+  --magenta: #d33682;  
+  --violet: #6c71c4; 
+  --blue: #268bd2;  
+  --cyan: #2aa198;  
+  --green: #859900;
 }
 
-body.dark{
+:root.dark{
   --bg-color: #002b36;
-  --text-color: #93a1a1;
+  --bg-color-alt: #073642;
+
 }
