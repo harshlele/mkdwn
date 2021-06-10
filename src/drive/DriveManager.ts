@@ -31,5 +31,35 @@ export class DriveManager{
         this.gapi.auth2.getAuthInstance().signIn();
     }
 
+    signOut(){
+        this.gapi.auth2.getAuthInstance().signOut();
+    }
+
+    listFiles(){
+        if(!this.isSignedIn()) return;
+
+        this.gapi.client.drive.files.list({
+            'pageSize': 10,
+            'fields': "nextPageToken, files(id, name)"
+          }).then((response:any) => {
+            console.log(response);
+            console.log('Files:');
+            var files = response.result.files;
+            if (files && files.length > 0) {
+              for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                console.log(file.name + ' (' + file.id + ')');
+              }
+            } else {
+              console.log('No files found.');
+            }
+          });
+        
+    }
+
+    onSignInChange(callback: Function){
+        this.gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
+    }
+
 }
 

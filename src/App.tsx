@@ -38,10 +38,17 @@ function App() {
   };
 
   const saveToDrive = () => {
-    console.log("cloud click"); // TODO: complete this
     if(!driveMg.isSignedIn()){
       console.log("signing in!");
+      driveMg.onSignInChange((isSignedIn:any) => {
+        if(isSignedIn){
+          driveMg.listFiles();
+        }
+      });
       driveMg.signIn();
+    }
+    else{
+      driveMg.listFiles();
     }
 
   };
