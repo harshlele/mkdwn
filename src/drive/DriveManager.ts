@@ -56,6 +56,26 @@ export class DriveManager{
           });
         
     }
+
+    uploadFile(fileName: String,fileContent: String){
+        if(!fileName) return;
+        let metadata = {
+            "name": fileName
+        };
+        let media = {
+            "mimeType": "text/plain",
+            "body": fileContent
+        }
+
+        this.gapi.client.drive.files.create({
+            resource: metadata,
+            media: media,
+            fields: 'id'
+        }).then((response:any) => {
+            console.log(response);
+        });
+
+    }
     
     //runs callback when sign in status changes
     onSignInChange(callback: Function){

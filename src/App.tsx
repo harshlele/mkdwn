@@ -21,10 +21,11 @@ function App() {
   const [currTab, setCurrTab] = useState(tab);
   const [rawText, setRawText] = useState("<!--Type something here. Markdown will be rendered to the right.-->");
   const [driveMg] = useState<DriveManager>(new DriveManager());
+  const [isSync, setIsSync] = useState(false);
+  const [currName, setCurrName] = useState("");
 
   const downloadFile = () => {
-    let d = new Date();
-    let fileName = `Markdown_${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.md`;
+    let fileName = getFileName();
     
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(rawText));    
@@ -37,18 +38,28 @@ function App() {
     document.body.removeChild(element);
   };
 
+  const getFileName = () => {
+    if(currName == ""){
+      let d = new Date();
+      let fileName = `Markdown_${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}_${Math.floor(Math.random()*10000)}.md`;
+      setCurrName(fileName);
+      return fileName;
+    }
+    else return currName;
+  };
+
   const saveToDrive = () => {
     if(!driveMg.isSignedIn()){
       console.log("signing in!");
       driveMg.onSignInChange((isSignedIn:any) => {
         if(isSignedIn){
-          driveMg.listFiles();
+          driveMg.uploadFile(getFileName(),rawText);
         }
       });
       driveMg.signIn();
     }
     else{
-      driveMg.listFiles();
+      driveMg.uploadFile(getFileName(),rawText);
     }
 
   };
