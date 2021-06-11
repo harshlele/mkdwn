@@ -53,6 +53,7 @@ function App() {
       console.log("signing in!");
       driveMg.onSignInChange((isSignedIn:any) => {
         if(isSignedIn){
+          
           driveMg.uploadFile(getFileName(),rawText);
         }
       });

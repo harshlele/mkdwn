@@ -39,7 +39,11 @@ export default function TopBar(props: Props) {
   return (
     <div className="heading">
       <div className="heading-text">
-        <span>{title}</span>
+        <span className="heading-span">
+          {title}
+          <small> (Syncing to Markdown_2013-12-11_9823.md. Last updated at 09:34 AM)</small>
+        </span>
+        
       </div>
       <div className="btn-bar">
         <img src={DarkModeIcon} title="Dark Mode" alt="Dark Mode" onClick={toggleTheme}/>

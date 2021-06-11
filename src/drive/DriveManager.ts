@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 
 export class DriveManager{
     gapi:any;
-    discoveryDocs:Array<String> = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-    scopes:String = "https://www.googleapis.com/auth/drive"
+    static discoveryDocs:Array<String> = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+    static scopes:String = "https://www.googleapis.com/auth/drive";
+    sync:boolean = false;
+    fileId:String = "";
 
     init(){
         dotenv.config();
@@ -12,8 +14,8 @@ export class DriveManager{
 
             this.gapi.client.init({
                 clientId: process.env.REACT_APP_CID,
-                discoveryDocs: this.discoveryDocs,
-                scope: this.scopes
+                discoveryDocs: DriveManager.discoveryDocs,
+                scope: DriveManager.scopes
             }).then(() => {
                 console.log("client init!");
             }, (error:any) => {
@@ -60,21 +62,45 @@ export class DriveManager{
     uploadFile(fileName: String,fileContent: String){
         if(!fileName) return;
         let metadata = {
-            "name": fileName
-        };
-        let media = {
+            "name": fileName,
             "mimeType": "text/plain",
-            "body": fileContent
+        };
+        
+        const boundaryStr = "drive_upload";
+        const delimiter = `\n--${boundaryStr}\n`;
+        const end_delim = `\n--${boundaryStr}--`; 
+
+        let body = delimiter 
+                + 'Content-Type: application/json; charset=UTF-8\n\n'
+                + JSON.stringify(metadata)
+                + delimiter
+                + `Content-Type: text/plain\n\n`
+                + `${fileContent}\n`
+                + end_delim;
+
+        let method = "POST";
+
+        if(this.sync){
+            method = "PATCH";
+            (metadata as any).id = this.fileId;
         }
 
-        this.gapi.client.drive.files.create({
-            resource: metadata,
-            media: media,
-            fields: 'id'
-        }).then((response:any) => {
-            console.log(response);
+        let request = this.gapi.client.request({
+            path: `https://www.googleapis.com/upload/drive/v3/files/${this.fileId}?uploadType=multipart`,
+            method: method,
+            headers:{
+                "Content-Type": `multipart/related; boundary=${boundaryStr}`,
+            },
+            body: body
         });
 
+        request.execute((response:any) => {
+            if(response.id){
+                this.fileId = response.id;
+                this.sync = true;
+            }
+        });
+        
     }
     
     //runs callback when sign in status changes
