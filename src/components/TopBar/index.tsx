@@ -9,7 +9,8 @@ import DarkModeIcon from './assets/dark_mode_36dp.svg'
 
 interface Props{
   download() : void,
-  saveGDrive(): void
+  saveGDrive(): void,
+  statusTxt: String,
 }
 
 export default function TopBar(props: Props) {
@@ -41,7 +42,7 @@ export default function TopBar(props: Props) {
       <div className="heading-text">
         <span className="heading-span">
           {title}
-          <small> (Syncing to Markdown_2013-12-11_9823.md. Last updated at 09:34 AM)</small>
+          <small> {props.statusTxt}</small>
         </span>
         
       </div>

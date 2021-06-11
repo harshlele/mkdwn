@@ -21,8 +21,14 @@ function App() {
   const [currTab, setCurrTab] = useState(tab);
   const [rawText, setRawText] = useState("<!--Type something here. Markdown will be rendered to the right.-->");
   const [driveMg] = useState<DriveManager>(new DriveManager());
-  const [isSync, setIsSync] = useState(false);
   const [currName, setCurrName] = useState("");
+  const [fileStatus,setFileStatus] = useState("");
+
+  driveMg.onFileSync = () => {
+    if(driveMg.sync){
+      setFileStatus(`(Syncing to ${getFileName()}. Last saved at ${driveMg.lastSyncTime})`);
+    }
+  };
 
   const downloadFile = () => {
     let fileName = getFileName();
@@ -53,7 +59,6 @@ function App() {
       console.log("signing in!");
       driveMg.onSignInChange((isSignedIn:any) => {
         if(isSignedIn){
-          
           driveMg.uploadFile(getFileName(),rawText);
         }
       });
@@ -118,7 +123,7 @@ function App() {
 
   return (
     <div className="App">
-      <TopBar download={downloadFile} saveGDrive={saveToDrive}/>
+      <TopBar download={downloadFile} saveGDrive={saveToDrive} statusTxt={fileStatus}/>
       <PanelSelector tabChangeCallback={setCurrTab} currentTab={currTab}/>
       <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} editorKeyDownCallback={onEditorKeyDown}/>
     </div>

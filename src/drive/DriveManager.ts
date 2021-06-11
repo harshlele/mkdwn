@@ -6,6 +6,8 @@ export class DriveManager{
     static scopes:String = "https://www.googleapis.com/auth/drive";
     sync:boolean = false;
     fileId:String = "";
+    lastSyncTime:String = "";
+    onFileSync:Function = () => {};
 
     init(){
         dotenv.config();
@@ -99,6 +101,14 @@ export class DriveManager{
                 this.fileId = response.id;
                 this.sync = true;
             }
+            let d = new Date;
+            this.lastSyncTime = new Intl.DateTimeFormat('default',{
+                                    hour12: true,
+                                    hour: 'numeric',
+                                    minute: 'numeric'
+                                })
+                                .format(d);
+            this.onFileSync();
         });
         
     }
