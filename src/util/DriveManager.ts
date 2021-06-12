@@ -101,7 +101,7 @@ export class DriveManager{
                 this.fileId = response.id;
                 this.sync = true;
             }
-            let d = new Date;
+            let d = new Date();
             this.lastSyncTime = new Intl.DateTimeFormat('default',{
                                     hour12: true,
                                     hour: 'numeric',

@@ -6,6 +6,9 @@ $color-shadow: #eeeeee;
     display:flex;
     flex-wrap: wrap;
     align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
 }
 
 .heading-text{

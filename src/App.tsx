@@ -3,8 +3,9 @@ import TopBar from './components/TopBar'
 import PanelSelector from './components/PanelSelector'
 import Editor from './components/Editor'
 import './App.css';
-import { loadGoogleScript } from './drive/GoogleScriptLoad';
-import { DriveManager } from './drive/DriveManager';
+import { loadGoogleScript } from './util/GoogleScriptLoad';
+import { DriveManager } from './util/DriveManager';
+import useDebounce from './util/DebounceHook';
 
 export enum Tab {EDITOR , DOCUMENT, BOTH}; 
 
@@ -23,6 +24,8 @@ function App() {
   const [driveMg] = useState<DriveManager>(new DriveManager());
   const [currName, setCurrName] = useState("");
   const [fileStatus,setFileStatus] = useState("");
+
+  const debouncedText = useDebounce(rawText,5000);
 
   driveMg.onFileSync = () => {
     if(driveMg.sync){
@@ -88,6 +91,12 @@ function App() {
   };
 
   useEffect(() => {
+    if(driveMg.sync && driveMg.fileId != ""){
+      driveMg.uploadFile(getFileName(),debouncedText);
+    }
+  },[debouncedText]);
+
+  useEffect(() => {
     
     function resize(){
       let timer: NodeJS.Timeout;
@@ -120,6 +129,10 @@ function App() {
       window.removeEventListener("resize",resize);
     }
   },[]);
+
+  useEffect(() => {
+    
+  },[rawText])
 
   return (
     <div className="App">
