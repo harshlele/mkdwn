@@ -73,23 +73,6 @@ function App() {
 
   };
 
-  const onEditorKeyDown = (e: any) => {
-    
-    if (e.key == 'Tab') {
-      e.preventDefault();
-      let target = e.target;
-      var start = target.selectionStart;
-      var end = target.selectionEnd;
-  
-      // set textarea value to: text before caret + tab + text after caret
-      let newText = rawText.substring(0, start) + "\t" + rawText.substring(end);
-      setRawText(newText);
-  
-      // put caret at right position again
-      target.selectionStart =  target.selectionEnd = start + 1;
-    }
-  };
-
   useEffect(() => {
     if(driveMg.sync && driveMg.fileId != ""){
       driveMg.uploadFile(getFileName(),debouncedText);
@@ -138,7 +121,7 @@ function App() {
     <div className="App">
       <TopBar download={downloadFile} saveGDrive={saveToDrive} statusTxt={fileStatus}/>
       <PanelSelector tabChangeCallback={setCurrTab} currentTab={currTab}/>
-      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} editorKeyDownCallback={onEditorKeyDown}/>
+      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} />
     </div>
   );
 }
