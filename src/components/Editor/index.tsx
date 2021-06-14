@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState, } from 'react'
 import './index.scss'
-import {Tab} from '../../App'
+import {Tab,Theme} from '../../App'
 import showdown from 'showdown'
 import AceEditor from "react-ace";
 
@@ -12,11 +12,13 @@ interface Props{
     currentTab: Tab
     rawText: string,
     rawTextCallback(s: string) : void,
+    theme: Theme
 }
 
 export default function Editor(props:Props){
 
-    const [htmlText, setHtmlText] = useState("");
+    const [htmlText, setHtmlText] = useState('');
+    const [editorTheme,setEdTheme] = useState('solarized_light');
 
     const converter = new showdown.Converter();
     converter.setFlavor('github');
@@ -36,6 +38,15 @@ export default function Editor(props:Props){
         setHtmlText(converter.makeHtml(newVal));
     }
 
+    useEffect(() => {
+        if(props.theme == Theme.LIGHT){
+            setEdTheme('solarized_light');
+        }
+        else{
+            setEdTheme('solarized_dark');
+        }
+    },[props.theme]);
+
     return (
         <div className="editor">
             {/*isEditor() && <textarea className="edit" onChange={onTextChange} value={props.rawText}></textarea>*/}
@@ -44,7 +55,7 @@ export default function Editor(props:Props){
                     <AceEditor 
                         name="editor" 
                         mode="markdown" 
-                        theme="solarized_light" 
+                        theme={editorTheme} 
                         onChange={onTextChange} 
                         editorProps={{}} 
                         width="100%" 

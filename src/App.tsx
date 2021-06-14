@@ -8,6 +8,7 @@ import { DriveManager } from './util/DriveManager';
 import useDebounce from './util/DebounceHook';
 
 export enum Tab {EDITOR , DOCUMENT, BOTH}; 
+export enum Theme {LIGHT, DARK};
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
   const [driveMg] = useState<DriveManager>(new DriveManager());
   const [currName, setCurrName] = useState("");
   const [fileStatus,setFileStatus] = useState("");
+  const [currTheme,setCurrTheme] = useState(Theme.LIGHT);
 
   const debouncedText = useDebounce(rawText,5000);
 
@@ -113,15 +115,12 @@ function App() {
     }
   },[]);
 
-  useEffect(() => {
-    
-  },[rawText])
 
   return (
     <div className="App">
-      <TopBar download={downloadFile} saveGDrive={saveToDrive} statusTxt={fileStatus}/>
+      <TopBar download={downloadFile} saveGDrive={saveToDrive} statusTxt={fileStatus} onThemeChangeCallback={setCurrTheme}/>
       <PanelSelector tabChangeCallback={setCurrTab} currentTab={currTab}/>
-      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} />
+      <Editor currentTab={currTab} rawText={rawText} rawTextCallback={setRawText} theme={currTheme}/>
     </div>
   );
 }

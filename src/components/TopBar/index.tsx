@@ -4,13 +4,14 @@ import CloudIcon from './assets/cloud-36dp.svg'
 import DownloadIcon from './assets/dw-36dp.svg'
 import LightModeIcon from './assets/light_mode_36dp.svg'
 import DarkModeIcon from './assets/dark_mode_36dp.svg'
-
+import {Theme} from '../../App';
 
 
 interface Props{
   download() : void,
   saveGDrive(): void,
   statusTxt: String,
+  onThemeChangeCallback: Function
 }
 
 export default function TopBar(props: Props) {
@@ -30,10 +31,12 @@ export default function TopBar(props: Props) {
     if(document.documentElement.classList.contains("dark")){
       document.documentElement.classList.remove("dark");
       (target as HTMLImageElement).src = DarkModeIcon; 
+      props.onThemeChangeCallback(Theme.LIGHT);
     }
     else{
       document.documentElement.classList.add("dark");
-      (target as HTMLImageElement).src = LightModeIcon; 
+      (target as HTMLImageElement).src = LightModeIcon;
+      props.onThemeChangeCallback(Theme.DARK); 
     }
   };
 
